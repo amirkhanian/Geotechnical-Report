@@ -1,0 +1,450 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     LaTeX source code to approximate a Draft NIST Technical report
+%	  Instructions for authors: tinyurl.com/techpubsnist 
+%	DOI watermark will be added on final PDF
+% 	Developed by K. Miller, kmm5@nist.gov 
+%	Last updated: 22-March-2019
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Template further altered by Armen Amirkhanian
+% for use with UA lab courses in an effort to 
+% have a standardized format for lab documents
+% Last update 9-April-2020
+%
+% TODO:
+% --Get the appendices to dynamically link, tocloft causes problems
+%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}   % if you want the fonts
+\usepackage{amssymb}    % if you want extra symbols
+\usepackage{graphicx}   % need for figures
+\usepackage{xcolor}
+\usepackage{bm}
+\usepackage{secdot}		
+\usepackage{mathptmx}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[hang,flushmargin,bottom]{footmisc} % footnote format
+\usepackage{xspace}
+%\usepackage{lineno}
+\usepackage{ragged2e}
+\usepackage{parskip}
+\usepackage{textcomp}
+\usepackage{environ}
+\usepackage{multirow}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=red!20]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\usepackage{titlesec}
+\titleformat{\section}{\normalsize\bfseries}{\thesection.}{1em}{}	% required for heading numbering style
+\titleformat*{\subsection}{\normalsize\bfseries}
+
+\usepackage{tocloft}	% change typeset, titles, and format list of appendices/figures/tables
+\renewcommand{\cftdot}{}	
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand\cftbeforesecskip{\setlength{4pt}{}}
+\addtolength{\cftfignumwidth}{1em}
+\renewcommand{\cftfigpresnum}{\figurename\ }
+\addtolength{\cfttabnumwidth}{1em}
+\renewcommand{\cfttabpresnum}{\tablename\ }
+\setlength{\cfttabindent}{0in}    %% adjust as you like
+\setlength{\cftfigindent}{0in} 
+
+\usepackage{enumitem}         % to control spacing between bullets/numbered lists
+
+\usepackage[numbers,sort&compress]{natbib} % format bibliography 
+\renewcommand{\bibsection}{}
+\setlength{\bibsep}{0.0pt}
+
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+	colorlinks = true,
+urlcolor ={blue},
+citecolor = {.},
+linkcolor = {.},
+anchorcolor = {.},
+filecolor = {.},
+menucolor = {.},
+runcolor = {.}
+pdftitle={},
+pdfsubject={},
+pdfauthor={},
+pdfkeywords={}
+}
+\urlstyle{same}
+
+\NewEnviron{letter}{%
+\begin{quote}
+\fbox{%
+\begin{minipage}{\linewidth}
+\setlength{\parskip}{\baselineskip}
+%\letterfont
+\BODY
+\end{minipage}
+}
+\end{quote}
+}
+
+
+\usepackage{epstopdf} % converting EPS figure files to PDF
+
+\usepackage{fancyhdr, lastpage}	% formatting document, calculating number of pages, formatting headers
+\setlength{\topmargin}{-0.5in}
+\setlength{\headheight}{39pt}
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\evensidemargin}{0.25in}
+\setlength{\textwidth}{6.0in}
+\setlength{\textheight}{8.5in}
+
+\usepackage{caption} % required for Figure labels
+\captionsetup{font=small,labelfont=bf,figurename=Fig.,labelsep=period,justification=raggedright} 
+
+%%%%%%%%%%% !!!!!REQUIRED - FILL OUT METADATA HERE !!!!!!!! %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\CourseNum}{CE340}
+\newcommand{\CourseName}{Geotechnical Engineering}
+\newcommand{\LabTitle}{Geotechnical Report}
+\newcommand{\LastUpdate}{Summer 2020}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   	BEGIN DOCUMENT 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\urlstyle{rm} % Format style of \url   
+%\linenumbers
+\begin{titlepage}
+\begin{flushright}
+\LARGE{\textbf{\CourseNum{} -- \CourseName}}\\
+\vfill
+\Huge{\textbf{\LabTitle}}\\
+    \vfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Authors - add complete list of authors, affiliations will be 
+%   added on title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \large Dr. Armen Amirkhanian, P.E.\\
+\vfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	The DOI is automated based on metadata.	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\normalsize This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit:
+\href{http://creativecommons.org/licenses/by-sa/4.0/}{http://creativecommons.org/licenses/by-sa/4.0/}.
+
+\includegraphics[width=0.07\textwidth]{cc.eps}
+\includegraphics[width=0.07\textwidth]{by.eps}
+\includegraphics[width=0.07\textwidth]{sa.eps}
+\vfill
+
+\includegraphics[width=0.3\linewidth]{Logo.eps}\\ 
+ 
+  
+\end{flushright}
+\end{titlepage}
+
+\begin{titlepage}
+\begin{center}
+\normalsize 
+Certain commercial entities, equipment, or materials may be identified in this document in order to describe an experimental procedure or concept adequately. Such identification is not intended to imply recommendation or endorsement by The University of Alabama or the listed authors, nor is it intended to imply that the entities, materials, or equipment are necessarily the best available for the purpose.\\
+
+\vfill
+Any opinions or recommendations are solely those of the authors and do not represent the official view or policy of The University of Alabama.
+\end{center}
+\begin{flushright}
+\vfill
+\normalsize 
+This document was last updated in \textbf{\LastUpdate} and should contain \textbf{\pageref{LastPage}} pages of content exclusive of these title pages, abstract, and other front matter. If the document appears to be incomplete, please contact the author(s).\\
+\vfill
+The only worse design than a pie chart is several of them.\\
+\textit{Edward Tufte}
+\end{flushright}
+\end{titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Start front matter - page number starts with "i"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman}
+\section*{Abstract}
+\normalsize The culmination of a series of laboratory and field tests is a geotechnical report. Most large civil engineering projects cannot begin until an exploratory geotechnical survey of the area is completed. Even small projects like a residential home can require the submission of a preliminary geotechnical report. While there are many different kinds of reports, and usually no standard template to follow, we will consider one general type. The geotechnical report format that will be used will contain seven distinct portions: cover letter, project description and scope, site description overview, testing methodology, subsurface soil conditions, design calculations/recommendations, and raw data. The geotechnical report that you will write will be in response to a client who is planning a single-family residence.\\
+
+\vfill
+\section*{Keywords}
+\normalsize geotechnical report; site survey; design calculations.\\
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Table of Contents is required
+% 	List of Tables & Figures required if more than 5 tables/figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\tableofcontents
+\pagebreak
+\listoftables
+\listoffigures
+\end{center}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Start body of text - page number starts with "1"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Geotechnical Report}
+\label{sec:intro}
+\pagenumbering{arabic}
+\normalsize 
+The geotechnical report is perhaps one of the most important parts of early project development as it describes the site conditions as-is. Often times design engineers will be states away from the job site and unable to visit the site in person. The geotechnical report provides all the necessary information to assist design engineers in planning the project from start to finish. Will the soil need to be stabilized? Will I have significant subsidence? Will the soil drain easily? These are just some of the questions that a well written geotechnical report can address.
+
+\subsection{Objectives}
+\label{ssec:headingscap}
+At the completion of this lab exercise, you will have satisfied the following objectives:
+\begin{enumerate}
+    \item Develop a geotechnical report from previously calculated/measured values
+    \item Develop a geotechnical report using data from government sources
+\end{enumerate}
+
+\subsection{Learning Outcomes}
+At the completion of this lab exercise, you should be able to:
+\begin{itemize}
+    \item understand how to present a large amount of data effectively to a varied audience
+\end{itemize}
+
+\pagebreak
+\subsection{Cover Letter}
+The cover letter is short and to the point. It will indicate the client, the general work performed, highlight important results\footnote{Sometimes, other times it is preferred to leave data out of the cover letter.}, and indicate professional review via a physical or digital professional engineering stamp\footnote{Each state is allowed to set criteria for how/where/when/why a document is stamped by a professional engineer. For example, Florida allows for digital stamping but the PDF can not be printed and still considered stamped.}. For small projects, your cover letter, excluding company info and other top matter, may only be three or four sentences. An example cover letter is shown below.
+
+\begin{letter}
+\today
+
+Bad Wolf Engineering, INC.
+76 Totters Lane
+Tuscaloosa, AL 35487
+
+Attn: Ms. Engineer
+
+Re: Geotechnical Report for Engineering Quad Swimming Pool Project
+
+Dear Ms. Engineer,
+
+Very Good Geotechnical Testing, INC. is pleased to submit our geotechnical engineering services report for the construction of a swimming pool in the engineering quad. The scope of our services was outlined in our original proposal.
+
+The following report presents the project information made available to us, our observation of the existing site conditions, the subsurface geotechnical information obtained during this exploration, and our evaluation of subsoil and groundwater conditions. Also included with this report, are the results of our field and laboratory testing. The assessment of site environmental conditions for the presence of pollutants in the soil, rock, and groundwater at this site was not included as a part of our services.
+
+We appreciate the opportunity to provide these services to you. If you have any questions regarding this report or if we may be of further service to you, please do not hesitate to call us.
+
+Sincerely,
+
+Very Good Geotechnical Testing, INC.
+\end{letter}
+
+\pagebreak
+
+\subsection{Project Description and Scope}
+Since the geoetechnical report will be a stamped document and will have legal standing, it is critically important to carefully and accurately identify the project, as you understand it, and the scope of the services you are providing. For example, if the client stated to you that they were building a two story, single-family home on the site, your foundation and bearing assessment would be based on that information. If the client then decided to build a six story, multi-family complex, your provided calculations may no longer be valid and the resulting structural design could be inadequate. If you did not clearly identify the scope of the report, as you understood it, you could be drug into the resulting litigation. For identifying the project, you want to establish a chain of events. An example is shown below.
+
+\begin{letter}
+Bad Wolf Engineering, INC. retained Very Good Geotechnical Testing, INC. to perform a geotechnical engineering study for the dvelopment of a multi-story, multi-family housing complex located at 1776 Murica Dr., Tuscaloosa, AL. The site is shown in Figure 1 in Appendix A.
+\end{letter}
+
+This clearly indicates that everything in the resulting geotechncial report is for a multi-story, multi-family housing complex. It also indicates that Bad Wolf Engineering, INC. retained you to complete the work. For a big project, there could be several engineering firms so it is important to outline who is actually requesting the geotechnical report.
+
+Continuing the theme of clarity, a multi-story, multi-family housing complex is not sufficiently clear. Our next step should be to describe the project in as much detail as we understand and highlight the deficiencies in our understanding. See the example below.
+
+\begin{letter}
+The proposed multi-story, multi-family housing complex is located south of Elm St., east of Mulholland Dr., west of Fleet St., and north of Woodland Rd. in Tuscaloosa, Tuscaloosa County, Alabama. We understand the proposed development consists of the design and construction of a multi-story, multi-family housing complex at 1776 Murica Dr., Tuscaloosa, AL. The preliminary structural design and grading plans were not available for review and evaluation. The anticipated structural loads for the proposed project are assumed to be 6 kips/ft for continuous footings and 100 kips for column footings. The building footprint area is 3,000 sq. ft. Any geotechnical design or recommendations in this report are based on these assumptions. If any of the assumed information is inaccurate or the project scope changes, please inform Very Good Geotechncial Testing, INC. so that we may review our recommendations and make revisions as needed.
+\end{letter}
+
+When you are retained by a client to perform work at a site, you will generally provide a list of services you are to perform. Sometimes the client will provide you with a scope of services and other times will expect you to provide a recommended scope of services. It is important to explicitly list all services listed in the scope of work for the project. This acts as a checklist for both you and the client to ensure the contract was executed satisfactorily. A partial example is shown below.
+
+\begin{letter}
+In order to obtain the required subsurface information, the Scope of Work has been presented below for this site.
+\begin{enumerate}
+    \item Very Good Geotechnical Testing, INC. contacted the 811 locate service to obtain underground public utility clearance prior to commencing field work.
+    \item Reviewed readily published geologic information from USDA NRCS.
+    \item Executed five Hand Auger Borings (HAB) to a depth of 4 feet and performed testing in accordance with ASTM D1452.
+    \item Visually classified and stratified representative soil samples per ASTM D3282 and D2487.
+    \item Prepared this formal engineering report summarizing the field exploration, lab testing, engineering analyses, and recommendations.
+\end{enumerate}
+\end{letter}
+
+\pagebreak
+\subsection{Site Description Overview}
+This section of a geotechnical report is a high level view of the site. You will provide some information from the United States Department of Agriculture (USDA) Natural Resources Conservation Service (NRCS) regarding the general soil conditions. Typically you will provide the soil unit, descriptions, soil classifications, and seasonally adjusted groundwater table, among other items. Sometimes the client would also like geological information, especially if the project involves deep foundations. In all presentations of the data, it is important to format it yourself and not screenshot the source for the sole reason of looking professional. For example, in presenting your soil data, create your own table and do not take a screenshot from the Web Soil Survey website. See below for an example.
+
+\begin{letter}
+The Soil Survey of Hillsborough County in Tampa Area, Florida published by the United States Department of Agriculture (USDA) Natural Resources Conservation Service (NRCS) was reviewed for general near-surface soil information. Refer to Figure 2 in Appendix A for a reproduction of the NRCS map for the project area, and the soil survey summary in Table \ref{tab:example_SSS} below.
+
+\begin{table}[H]
+    \centering
+     \caption{Soil Survey Summary}
+    \label{tab:example_SSS}
+    \begin{tabular}{cllll}
+\hline
+Soil Unit & Depth, in & Description & USCS & SHGWT*, ft \\ \hline
+ & 0--5 & Fine Sand & SP &  \\
+Winder & 5--14 & Fine Sand & SP &   0--1\\
+(60) & 14--18 & Sandy Clay Loam & SP &   \\
+ & 18--34 & Sandy Clay Loam & SP &   \\ \hline
+ \multicolumn{5}{l}{*Seasonal High Groundwater Table}
+\end{tabular}
+   
+\end{table}
+\end{letter}
+
+Some clients will also require some approximate topographical information, especially when the site is undisturbed (i.e. no previous development exists). The United States Geological Survey publishes topographical maps that can be used for this purpose. It is extremely important to acknowledge that a licensed professional engineer is not a licensed professional surveyor and cannot legally comment on metes and bounds, boundaries, and exact elevation features. An example of an appropriate level of detail that a licensed professional engineer can describe is shown below.
+
+\begin{letter}
+The “Hillsborough County in Tampa Quadrangle.” USGS Topographic Survey Quadrangle Map issued in 2018 was reviewed for ground surface features.  Based on Very Good Geotechnical Testing, INC. review, the natural ground surface at the project location appears to be nearly level at approximately +15 feet relative to North American Vertical Datum of 1988 (NAVD-88). The site is located within Section 26, Township T26 and Range R19 in Hillsborough County, Florida. 
+\end{letter}
+
+\pagebreak
+\subsection{Testing Methodology}
+Nearly all geotechnical investigations have both a field and laboratory investigation plan. For this exercise, the only field work you conducted was the sand cone test, so that portion of your report will be small. In practice, the field investigation portion contains the testing procedures used for borings, hand augers, double-ring infiltration testing, etc. and can be quite extensive. However, there is extensive laboratory testing that you conducted that will need to be included in the report. For both field and laboratory reports, it is important to be succinct, accurate, and, most importantly, note any deviations from accepted practices. An example of a sufficient field testing methodology description and laboratory testing methodology is shown below.
+
+\begin{letter}
+Hand auger borings were performed to a depth of six (6) feet below natural grade by manually twisting and advancing a bucket into the ground to 6-inch increments. This boring was performed in general accordance with the American Society of Testing and Material (ASTM) Testing designation D-1452. As each sample was revealed, representative samples were placed in air-tight jars and returned to our laboratory for visual examination and classifications by the licensed geotechnical engineer.
+
+The laboratory tests were conducted in general accordance with ASTM specifications. The laboratory test results are summarized in Table \ref{tab:example_LTP} below. The ASTM method number for each test and the number of tests completed are presented in the following table, and the results of the tests are in Table 1 in Appendix D.
+
+\begin{table}[H]
+    \centering
+     \caption{Laboratory Testing Executed}
+    \label{tab:example_LTP}
+    \begin{tabular}{ccc}
+\hline
+Description & Number of Tests & ASTM Test Method \\ \hline
+Gradation & 5 & D6913 \\
+Moisture Content & 2 & D2216 \\
+Classification & 10 & D2487/D2488 \\ \hline
+\end{tabular}
+\end{table}
+\end{letter}
+
+\pagebreak
+\subsection{Subsurface Soil Conditions}
+This is the heart of your geotechnical report. This section will summarize the findings from your investigation. In most reports, the results from the soil borings are the key portion of this section. The laboratory testing results are typically not mentioned and the data is simply provided in an appendix. However, your report will focus more on the laboratory findings as you will not have a boring report. This section of the report is meant to summarize your findings, not present each and every test result you obtained. Since we are deviating from what is in a typical report, there is no good example to provide. However, at a minimum, this section of your report should contain the following:
+\begin{itemize}
+    \item USCS classification
+    \item AASHTO classification
+    \item Optimum moisture content and maximum dry density
+    \item Field measured density and compaction percentage
+\end{itemize}
+
+Your presentation should be mostly in narrative form. Your appendix will contain the raw data and graphs. An example of how to take graphical data (i.e. sieve analyses) and ``convert'' them into a narrative is shown below.
+
+\begin{letter}
+A sieve analysis was performed on the two soil samples. Sample A was a clayey soil with a USCS classification of CH and an AASHTO classification of A-6(20). This soil had an OMC of 12\% and was found to be compacted to 93\% MDD in the field.
+
+The second sample, Sample B was a gravel material with a USCS classification of GW and an AASHTO classification of A-1-a(0). This soil was not part of the compaction process and thus no moisture density curve or compaction values are available.
+\end{letter}
+
+\pagebreak
+\subsection{Design Calculations and Recommendations}
+From a professional licensure point of view, this is the most important part of the report. You are legally liable for the calculations and recommendations you provide in this section. Engineers have gone to jail for miscalculations when they lead to loss of life. While it is not likely you will be imprisoned for a miscalculation on a residential geotechnical report, you could very easily be sued if that miscalculation cost the client money in loss of time or additional materials to address the inadequacy.
+
+Additionally, this section of a geotechnical report is very specific to the proposed project. For a residential project, assuming the soil conditions are sufficient, a general design will be proposed and this design is identical for a specific range of soil conditions. An example of such language is shown below. In this example, there is no specific mention of design loads because they were not known at the time of the report. Recall earlier in the example report it was assumed that continuous footings could support 6 kips/ft.
+
+\begin{letter}
+The area that will support the single-family home should be properly prepared; all topsoil and unsuitable materials should be removed to a 3-foot distance beyond the perimeter of the structure. Unsuitable materials include the following: topsoil, concrete, asphaltic concrete, buried structures, rubbles, any soft soil and miscellaneous fill. Any buried utility lines within the construction limits should be located, removed, and relocated outside the construction area.
+
+Suitable structural fill/backfill material for the excavated area should consist of an inorganic, non-plastic, granular soil containing less than 10 percent material passing the No. 200 mesh sieve (relatively graded gravel or a crushed lime-rock with a two-inch maximum particle size) with a Unified Soil Classification of GP, GW or SP or similar to \#57 stones. It shall be clean, shall not be expansive nor have high organic content, and shall be free of clay, marl, unstable materials and debris.
+
+The structural backfill of the foundation pad should be compacted to a density of at least 95 percent of the ASTM D-1557 maximum dry density. The required compaction should be achieved for a depth of at least one and a half (1.5) feet below the bottom of the bearing surface. Lean concrete can also be used as a backfill material to achieve sufficient bearing capacity in poor soil conditions.
+\end{letter}
+
+For your report, the client wants to use foundation pads that will be 24 inches by 24 inches and 12 inches thick. The allowable load on each pad is 10,000 lb$_f$. Unfortunately, Very Good Geotechnical Testing, INC. forgot to include triaxial testing in their scope of work and there is no friction angle data available. You should assume a reasonable friction angle for a clayey soil and use the previously calculated unit weights to determine the factor of safety of the clients design.
+
+If a sufficient factor of safety exists, you can state that the design as-is appears to be adequate but any changes to the design loads should be re-evaluated. If the factor of safety is below the generally accepted values, state that the client should retain your services to design a better foundation and that construction should not begin until a proper foundation has been designed.
+
+\subsection{Report Limitations}
+What would any engineering report be without a bunch of disclaimers. We are not environmental engineers. We are not structural engineers. We are not professional surveyors. We are geotechncial engineers and thus our findings and data analysis are limited to our field. See below for a good example of how to limit your liability.
+
+\begin{letter}
+Our professional services have been performed, our findings obtained, and our recommendations prepared in accordance with generally accepted geotechnical engineering principles and practices.  The recommendations provided in this report are based on design concepts, parameters and constraints made known to this firm.  The final design may require revision of the recommendations provided herein and should consider the findings of the complementary subsoil exploration scheduled to be performed once the existing building is demolished.  We are not responsible for the conclusions, opinions or recommendations made by others based on these data.
+
+The scope of the exploration was intended to evaluate soil conditions within the influence of the foundations systems considered in this report. It does not include any evaluations of deep potential soil problems such as sinkholes.  The analysis and recommendations submitted in this report are based upon the data obtained from the soil borings performed at the locations indicated and does not reflect any variations which may occur among these borings.  If any variations become evident during the course of this project, a re-evaluation of the recommendations contained in this report will be necessary after we have had the opportunity to observe the characteristics of the conditions encountered.  The applicability of the report should be reviewed in the event significant changes occur in the design, nature or location of the proposed structures.
+
+The scope of services included herein, did not include any environmental assessment for the presence or absence of hazardous or toxic materials in the soil, surface water and groundwater, air on the site, below and around the site.  Any statements in this report or on the boring logs regarding odors, colors, unusual or suspicious items and conditions are strictly for the information of the client.
+\end{letter}
+
+\newpage
+\section{Deliverable}
+This is it, your final deliverable! Using the information in this lab manual and the real-life example report on Blackboard, create your own geotechnical report. At a minimum, you should have:
+
+\begin{itemize}
+    \item Cover Letter
+    \item Project Description and Scope\footnote{You are free to create your own story following the very general guidelines presented in this manual.}
+    \item Site Description Overview (i.e. Web Soil Survey, location)\footnote{You can reuse the work you did for HW2 for this.}
+    \item Testing Methodology
+    \item Subsurface Soil Conditions
+    \item Design calculation for foundation load and general recommendations
+    \item Limitations
+    \item Appendices of all your lab deliverables
+\end{itemize}
+
+A lot of the content will be copied and pasted. You can look at the real-life example report and realize that a lot of it could easily be re-used for each geotechnical report. It is perfectly acceptable to do that provided the statements remain accurate for the specific project.
+
+Provided that you have already made the changes to your previous lab deliverables to address any deficiencies, pulling together everything into a single report should take no more than an hour or two. If you are not already familiar with your Ctrl+C and Ctrl+V, you should get familiar!
+
+Submit your final report as a single PDF file.
+
+
+
+%\section*{References}
+%\addcontentsline{toc}{section}{References}
+%\bibliographystyle{techpubs}
+%\bibliography{References}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Please use the techpubs BibTeX style when compiling bibliography, or follow the instructions on tinyurl.com/techpubsnist to format your .bib / .bbl file appropriately.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\pagebreak
+
+%\section*{Appendix A: Example Gradation Worksheet}
+%\label{AppendixA}
+%\addcontentsline{toc}{section}{Appendix A: Example Gradation Worksheet}
+%\begin{center}
+%    \includegraphics[width=1\linewidth]{Example_Sieve_Analysis_Worksheet.eps}
+%\end{center}
+
+%\pagebreak
+%\section*{Appendix B: Change Log}
+%\addcontentsline{toc}{section}{Appendix B: Change Log}
+%This document was originally created on April 16, 2020. Any changes will be documented in this appendix.
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   When referring to references in the text parenthetically, 
+%	use the form “[1].” For example, “As Jones and Smith have shown [1];”
+%	 however, when a reference is referred to non-parenthetically, use the form 
+%	“. . . Ref. [1] . . .” (except at the beginning of a sentence where
+%	“Reference [1] . . .” is the correct form).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Section references are “Sec. X”.
+% 	“Section X” is used at beginning of sentence. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Equation references are “Eq. (X)”.
+% 	“Equation (1) is used at beginning of sentence.
+%	Equations are numbered (#) on the right, per the standard LaTeX format
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Tables should appear after they are mentioned in the text. 
+%	Superscripted letters (a, b, c, etc.) should be used for table footnotes.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Figure references are “Fig. X”.
+% 	“Figure X” is used at beginning of sentence. 
+% 	Figures should appear after they are mentioned in the text.
+%	Figures must have embedded alternate text or “alt text” in order 
+%	to comply with Section 508 accessibility standards. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
